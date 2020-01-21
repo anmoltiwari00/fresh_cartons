@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import {
   Image,
   View,
-  StyleSheet
+  StyleSheet,
+  Text
 } from 'react-native';
 
 export default class HeaderMid extends PureComponent {
@@ -12,9 +13,9 @@ export default class HeaderMid extends PureComponent {
       <View>
         {
           mid ?
-          <View>
-            <Image source={require('../assets/images/address.png')} />
-            <Text style={styles.address}>Vashi, Navi Mumbai</Text>
+          <View style={styles.container}>
+            <Image source={require('../assets/images/address.png')} style={styles.image}/>
+            <Text style={styles.address} numberOfLines={1}>501, D Block, Vashi, Sector 17, Navi Mumbai, Mumbai</Text>
           </View> : null
         }
       </View>
@@ -26,10 +27,14 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingHorizontal: '5%'
   },
   address: {
     color: '#A6A6A6',
     fontSize: 14
+  },
+  image: {
+    marginRight: 10
   }
 })

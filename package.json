@@ -16,6 +16,7 @@
     "react-native-dash": "^0.0.11",
     "react-native-gesture-handler": "^1.5.2",
     "react-native-image-slider-box": "^1.0.11",
+    "react-native-intercom": "^13.2.0",
     "react-native-reanimated": "^1.4.0",
     "react-native-safe-area-context": "^0.6.2",
     "react-native-safe-area-view": "^1.0.0",

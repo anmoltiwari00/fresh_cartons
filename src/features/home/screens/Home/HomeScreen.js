@@ -15,6 +15,7 @@ import styles from './HomeScreenStyle';
 
 import HeaderLeft from '../../../../shared/HeaderLeft';
 import HeaderRight from '../../../../shared/HeaderRight';
+import HeaderMid from '../../../../shared/HeaderMid';
 import SideDrawer from '../../../../shared/SideDrawer';
 
 import Search from '../../components/Search';
@@ -27,6 +28,8 @@ import c from '../../constants';
 export default class HomeScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
+      headerTitleStyle: { alignSelf: 'center' },
+      headerTitle: <HeaderMid mid={true} />,
       headerTransparent: true,
       headerStyle: {
         marginTop: 20

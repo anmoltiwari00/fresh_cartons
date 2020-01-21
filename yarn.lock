@@ -5214,6 +5214,11 @@ react-native-image-slider-box@^1.0.11:
   dependencies:
     react-native-snap-carousel "*"
 
+react-native-intercom@^13.2.0:
+  version "13.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-intercom/-/react-native-intercom-13.2.0.tgz#22181547d26bcd008bc184cab15f18db6d413b4b"
+  integrity sha512-Y0gdlBY0DvsVYnB81gLOQgMXsgSNh9R9vTktqIBL24LJFQVOszDShw9w+GTYp7RTaQAo1Wls2GrushpUMUKa7Q==
+
 react-native-measureme@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/react-native-measureme/-/react-native-measureme-0.0.2.tgz#7f54eeb0813d461ef6c49d921e42e253d649c47a"

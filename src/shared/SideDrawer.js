@@ -72,7 +72,7 @@ const SideDrawer = props => (
         }
       </View>
       <View>
-        <TouchableOpacity style={styles.closeContainer}>
+        <TouchableOpacity style={styles.closeContainer} onPress={() => props.navigation.navigate('SignIn')}>
           <Image source={require('../assets/images/logout-icon.png')}/>
           <Text style={styles.blackText}>Logout</Text>
         </TouchableOpacity>
