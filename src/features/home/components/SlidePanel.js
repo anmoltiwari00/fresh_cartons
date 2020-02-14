@@ -35,8 +35,8 @@ export default class SlidePanel extends PureComponent {
             <ScrollView>
               <View style={styles.centeringContainer}>
                 {
-                  products.map(item =>
-                    <View style={styles.productContainer}>
+                  products.map((item, index) =>
+                    <View key={index} style={styles.productContainer}>
                       {item}
                     </View>
                   )

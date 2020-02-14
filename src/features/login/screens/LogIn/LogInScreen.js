@@ -8,14 +8,19 @@ import {
   ImageBackground,
   Image,
   StatusBar,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Alert
 } from 'react-native';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 import SharedButton from '../../../../shared/SharedButton';
 import SharedFacebookButton from '../../../../shared/SharedFacebookButton';
 import SharedInput from '../../../../shared/SharedInput';
 
-export default class LogInScreen extends PureComponent {
+import { login } from '../../actions';
+
+export class LogInScreen extends PureComponent {
   static navigationOptions = {
     header: null
   }
@@ -23,7 +28,29 @@ export default class LogInScreen extends PureComponent {
     super(props);
   }
 
+  _submitData(values) {
+    let o = {
+      password: values.password,
+      email: values.email
+    }
+    this.props.logIn(o);
+  }
+
+  componentDidUpdate(prevProps, props) {
+    if(prevProps !== props) {
+      Alert.alert(
+        'Error',
+        (this.props.shared && this.props.shared.error),
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: false},
+      );
+    }
+  }
+
   render() {
+    console.log(this.props);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
@@ -34,26 +61,47 @@ export default class LogInScreen extends PureComponent {
         </ImageBackground>
         <View style={styles.loginContainer}>
           <Text style={styles.signUp}>Login</Text>
-          <SharedInput
-            label='Username'
-          />
-          <SharedInput
-            label='Password'
-          />
-          <TouchableOpacity
-            style={styles.forgot}
+          <Formik
+            initialValues={{ email: '', password: ''}}
+            onSubmit={values => this._submitData(values)}
+            validationSchema={LoginSchema}
           >
-            <Text style={styles.forgotText}>Forgot your password?</Text>
-          </TouchableOpacity>
-          <SharedButton
-            value='Sign In'
-            onPress={() => this.props.navigation.navigate('Home')}
-          />
-          <SharedFacebookButton
-            value='Sign In with facebook'
-            imgSrc={require('../../../../assets/images/facebook-small.png')}
-            onPress={() => this.props.navigation.navigate('Home')}
-          />
+            {({ handleChange, handleSubmit, values, errors, touched }) => (
+              <View>
+                <SharedInput
+                  label='email'
+                  onChangeText={handleChange('email')}
+                  value={values.email}
+                />
+                {errors.email && touched.email ? (
+                      <Text style={styles.error}>{errors.email}</Text>
+                    ) : null}
+                <SharedInput
+                  label='Password'
+                  onChangeText={handleChange('password')}
+                  value={values.password}
+                  secureTextEntry={true}
+                />
+                {errors.password && touched.password ? (
+                      <Text style={styles.error}>{errors.password}</Text>
+                    ) : null}
+                <TouchableOpacity
+                  style={styles.forgot}
+                >
+                  <Text style={styles.forgotText}>Forgot your password?</Text>
+                </TouchableOpacity>
+                <SharedButton
+                  value='Sign In'
+                  onPress={handleSubmit}
+                />
+                <SharedFacebookButton
+                  value='Sign In with facebook'
+                  imgSrc={require('../../../../assets/images/facebook-small.png')}
+                  onPress={() => this.props.navigation.navigate('Home')}
+                />
+              </View>
+            )}
+          </Formik>
         </View>
       </View>
     );
@@ -95,13 +143,34 @@ const styles = StyleSheet.create({
   },
   forgot: {
     width: '100%',
-    marginTop: '8%',
-    marginBottom: '4%',
     flexDirection: 'row',
     justifyContent: 'center'
   },
   forgotText: {
     color: '#BEC2CE',
-    fontSize: 15
+    fontSize: 15,
+    paddingVertical: '4%'
+  },
+  error: {
+    color: 'red',
+    fontSize: 10
   }
 });
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Not a valid email')
+    .required('Required'),
+  password: Yup.string()
+    .required('Required'),
+});
+
+const mapDispatchToProps = dispatch => ({
+  logIn: data => {
+  	dispatch(login(data));
+  }
+});
+
+const mapStateToProps = (state) => ({...state});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogInScreen);

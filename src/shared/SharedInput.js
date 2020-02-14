@@ -15,6 +15,9 @@ export default class SharedInput extends PureComponent {
         <TextInput
           placeholder={this.props.placeholder}
           style={[styles.defaultInput, passedStyles]}
+          onChangeText={this.props.onChangeText}
+          value={this.props.value}
+          secureTextEntry={this.props.secureTextEntry}
         />
       </View>
     )
